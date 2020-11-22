@@ -53,7 +53,6 @@ def get_trajs_from_data(data_path, train_mdps, ordered_trajs, processed, silent=
         processed=processed,
         silent=silent
     )
-
     return trajs, info
 
 
@@ -143,7 +142,6 @@ def get_dict_stats(d):
         }
     return new_d
 
-
 def train_test_split(trials, train_size=0.7, print_stats=False):
     cleaned_trials_dict = defaultdict(dict)
 
@@ -203,7 +201,6 @@ def format_hh_trials_df(trials, clip_400):
 
     if clip_400:
         trials = trials[trials["cur_gameloop"] <= 400]
-
     # Add game length for each round
     trials = trials.join(trials.groupby(['trial_id'])['cur_gameloop'].count(), on=['trial_id'], rsuffix='_total')
 
@@ -211,7 +208,6 @@ def format_hh_trials_df(trials, clip_400):
     trials = trials.join(trials.groupby(['trial_id'])['score'].max(), on=['trial_id'], rsuffix='_total')
 
     return trials
-
 
 ## Human-AI dataframe data processing functions
 

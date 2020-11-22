@@ -23,7 +23,6 @@ def json_joint_action_to_python_action(json_joint_action):
         json_joint_action = json.loads(json_joint_action)
     return tuple(json_action_to_python_action(a) for a in json_joint_action)
 
-
 def json_state_to_python_state(df_state):
     """Convert from a df cell format of a state to an Overcooked State"""
     if type(df_state) is str:
@@ -56,8 +55,7 @@ def df_traj_to_python_joint_traj(traj_df, complete_traj=True):
     overcooked_actions = [json_joint_action_to_python_action(joint_action) for joint_action in traj_df.joint_action]
     overcooked_rewards = list(traj_df.reward)
 
-    assert sum(
-        overcooked_rewards) == datapoint.score_total, "Rewards didn't sum up to cumulative rewards. Probably trajectory df is corrupted / not complete"
+    assert sum(overcooked_rewards) == datapoint.score_total, "Rewards didn't sum up to cumulative rewards. Probably trajectory df is corrupted / not complete"
 
     trajectories = {
         "ep_observations": [overcooked_states],
@@ -82,9 +80,7 @@ def df_traj_to_python_joint_traj(traj_df, complete_traj=True):
         agent_evaluator.check_trajectories(trajectories)
     return trajectories
 
-
-def convert_joint_df_trajs_to_overcooked_single(main_trials, layout_names, ordered_pairs=True, processed=False,
-                                                silent=False):
+def convert_joint_df_trajs_to_overcooked_single(main_trials, layout_names, ordered_pairs=True, processed=False, silent=False):
     """
     Takes in a dataframe `main_trials` containing joint trajectories, and extract trajectories of workers `worker_ids`
     on layouts `layout_names`, with specific options.
@@ -122,8 +118,7 @@ def convert_joint_df_trajs_to_overcooked_single(main_trials, layout_names, order
             human_indices.append(human_idx)
 
             # Convert joint trajectories to single agent trajectories, appending recovered info to the `trajectories` dict
-            joint_state_trajectory_to_single(single_agent_trajectories, joint_traj_data, human_idx, processed=processed,
-                                             silent=silent)
+            joint_state_trajectory_to_single(single_agent_trajectories, joint_traj_data, human_idx, processed=processed, silent=silent)
 
     if not silent: print("Number of trajectories processed for each layout: {}".format(num_trials_for_layout))
     return single_agent_trajectories, human_indices
